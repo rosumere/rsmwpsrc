@@ -1,0 +1,11 @@
+@import "vendors/vendor";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  box-sizing: inherit;
+}

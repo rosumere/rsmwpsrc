@@ -1,8 +1,9 @@
 const { src, dest, watch, series, parallel } = require("gulp");
+
 const sass = require("gulp-sass")(require("sass"));
 const browserSync = require("browser-sync").create();
 const sourcemaps = require("gulp-sourcemaps");
-const autoprefixer = require("gulp-autoprefixer");
+const autoprefixer = require('gulp-autoprefixer');
 const rename = require("gulp-rename");
 const gcmq = require("gulp-group-css-media-queries");
 const cleanCSS = require("gulp-clean-css");
@@ -12,24 +13,22 @@ const webp = require("gulp-webp");
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify-es').default;
 
-const destFolder = 'www/wp-content/themes/rsmprofiblock/';
+const destFolder = 'www/wp-content/themes/rsmprofiblock';
 let isProd = false;
 
 /**
  * Main styles task
  */
 function mainStyles() {
-  return src('src/scss/style.scss')
+  return src('_src/scss/style.scss')
     .pipe(gulpif(!isProd, sourcemaps.init()))
     .pipe(sass())
     .pipe(gulpif(isProd, gcmq()))
-    .pipe(
-      autoprefixer({
-        cascade: false,
-        grid: true,
-        overrideBrowserslist: ["last 5 versions"],
-      })
-    )
+    .pipe(autoprefixer({
+      cascade: false,
+      grid: true,
+      overrideBrowserslist: ["last 5 versions"]
+    }))
     .pipe(
       gulpif(
         isProd,
@@ -66,7 +65,7 @@ function images() {
         isProd,
         image([
           image.mozjpeg({
-            quality: 80,
+            quality: 78,
             progressive: true,
           }),
           image.optipng({
@@ -140,8 +139,8 @@ exports.watching = watching;
 exports.default = parallel(
   vendorStyles,
   vendorScripts,
+  mainStyles,
   mainScripts,
-  styles,
   images,
   webpImages,
   resource,
